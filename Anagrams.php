@@ -22,9 +22,10 @@ class Anagrams {
 	}
 	
 	public function getAnagram($startWord){
+        echo $this->compareWords('otto', 'otto');
 		foreach($this->words as $word){
-			echo $startWord . ', ' . $word . ', ' . $this->compareWords($startWord, $word);
-			if($this->compareWords($startWord, $word)){
+			#echo $startWord . ', ' . $word . ', ' . (($this->compareWords($startWord, $word))?'true':'false');
+			if($this->compareWords($startWord, $word) === true){
 				return $word;
 			}
 		}
@@ -48,8 +49,10 @@ class Anagrams {
 					return false;
 				}
 			}
+            echo 'true' . $word1 . ', ' . $word2;
 			return true;
 		}
+        echo 'false' . $word1 . ', ' . $word2;
 		return false;
 		
 	}

@@ -37,9 +37,15 @@ class AnagramsTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('toto', $this->anagramObj->getAnagram('otto'));
 	}
 	
-	public function testCompareWords() {
+	public function testCompareWordsOttoOtto() {
 		$this->assertTrue($this->anagramObj->compareWords('otto','otto'));
+	}
+	
+	public function testCompareWordsOttoToot() {
 		$this->assertTrue($this->anagramObj->compareWords('otto','toot'));
+	}
+	
+	public function testCompareWordsActa() {
 		$this->assertTrue($this->anagramObj->compareWords('actaeonidae','donatiaceae'));
 	}
 	

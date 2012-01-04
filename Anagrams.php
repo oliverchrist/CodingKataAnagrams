@@ -12,24 +12,25 @@
  */
 class Anagrams {
 	private $words;
+    private $hashmap;
 
 	public function __construct($filepath) {
 		$this->words = file($filepath);
         #trim words
         for($x = 0; $x < count($this->words); $x++) {
-            $this->words[$x] = trim($this->words[$x]);
-            
+            $tempWord = trim($this->words[$x]);
+            $this->words[$x] = $tempWord;
+            $this->hashmap[$this->sortWord(strtolower($tempWord))][] = $tempWord;
         }
         #Ausgabe aller Anagrame
         $x=1;
-        foreach ($this->words as $word) {
-            $anagrams = $this->getAnagrams($word);
-            if(count($anagrams) > 0){
-                echo $x++ . '. Anagrams of: ' . $word . "\n" . implode(', ', $anagrams) . "\n\n";
+        foreach($this->hashmap as $hashArray){
+            if(count($hashArray)>1){
+                echo $x++ . '. Anagrams: ' . implode(', ', $hashArray) . "\n\n";
             }
         }
 	}
-	
+	/*
 	public function getWords(){
 		return $this->words;
 	}
@@ -52,14 +53,14 @@ class Anagrams {
 		}
 		return $anagrams;
 	}
-	
+	*/
 	public function sortWord($word) {
         $wordArray = preg_split('/\B/', $word);
         sort($wordArray);
         $word = implode($wordArray);
         return $word;
 	}
-	
+	/*
 	public function compareWords($word1, $word2){
 		#nur wenn gleich lang kann es ein Anagram sein
 		if(strlen($word1) == strlen($word2) && $word1 != $word2){
@@ -74,6 +75,7 @@ class Anagrams {
 		return false;
 		
 	}
+    */
 }
 
 ?>

@@ -12,19 +12,31 @@
  */
 class Anagrams {
 	private $words;
+    private $hashmap;
 
 	public function __construct($filepath) {
 		$this->words = file($filepath);
+        #trim words
+        for($x = 0; $x < count($this->words); $x++) {
+            $tempWord = trim($this->words[$x]);
+            $this->words[$x] = $tempWord;
+            $this->hashmap[$this->sortWord(strtolower($tempWord))][] = $tempWord;
+        }
+        #Ausgabe aller Anagrame
+        $x=1;
+        foreach($this->hashmap as $hashArray){
+            if(count($hashArray)>1){
+                echo $x++ . '. Anagrams: ' . implode(', ', $hashArray) . "\n\n";
+            }
+        }
 	}
-	
+	/*
 	public function getWords(){
 		return $this->words;
 	}
 	
 	public function getAnagram($startWord){
-        echo $this->compareWords('otto', 'otto');
 		foreach($this->words as $word){
-			#echo $startWord . ', ' . $word . ', ' . (($this->compareWords($startWord, $word))?'true':'false');
 			if($this->compareWords($startWord, $word) === true){
 				return $word;
 			}
@@ -32,30 +44,38 @@ class Anagrams {
 		return false;
 	}
 	
-	public function compareWords($word1, $word2){
-		$word1Arr = array();
-		$word2Arr = array();
-		#nur wenn gleich lang kann es ein Anagram sein
-		if(strlen($word1) == strlen($word2)){
-			#in Array schreiben
-			for($x = 0; $x < strlen($word1); $x++){
-				$word1Arr[] .= substr($word1, $x, 1);
-				$word2Arr[] .= substr($word2, $x, 1);
+	public function getAnagrams($startWord){
+        $anagrams = array();
+		foreach($this->words as $word){
+			if($this->compareWords($startWord, $word) === true){
+				$anagrams[] = $word;
 			}
-			sort($word1Arr);
-			sort($word2Arr);
-			for($x = 0; $x < count($word1Arr); $x++){
-				if($word1Arr[$x] != $word2Arr[$x]){
-					return false;
-				}
-			}
-            echo 'true' . $word1 . ', ' . $word2;
-			return true;
 		}
-        echo 'false' . $word1 . ', ' . $word2;
+		return $anagrams;
+	}
+	*/
+	public function sortWord($word) {
+        $wordArray = preg_split('/\B/', $word);
+        sort($wordArray);
+        $word = implode($wordArray);
+        return $word;
+	}
+	/*
+	public function compareWords($word1, $word2){
+		#nur wenn gleich lang kann es ein Anagram sein
+		if(strlen($word1) == strlen($word2) && $word1 != $word2){
+			#in Array schreiben
+			$sortedWord1 = $this->sortWord($word1);
+			$sortedWord2 = $this->sortWord($word2);
+			
+			if($sortedWord1 == $sortedWord2) {
+				return true;
+			}
+		}
 		return false;
 		
 	}
+    */
 }
 
 ?>
